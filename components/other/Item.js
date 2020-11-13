@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   imagen: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 45,
     marginRight: 10,
     borderRadius: 50,
   },
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: 200,
+    height: 30,
   },
   item: {
     marginVertical: 10,

@@ -58,6 +58,7 @@ const ListScreen = (props, route) => {
             name: item.first_name,
             surname: item.last_name,
             email: item.email,
+            avatar: item.avatar,
           })
         }}
         style={[styles.item, { backgroundColor: backgroundColor }]}
@@ -95,8 +96,7 @@ const ListScreen = (props, route) => {
 
       <View style={styles.containerBottom}>
         {selectedId ? (
-          <Text style={[styles.text, { marginTop: 20 }]}>
-            Has seleccionado:
+          <Text style={[styles.text]}>
             {contacts
               .filter((contact) => contact.id === selectedId)
               .map((contact) => contact.name)}
@@ -121,15 +121,16 @@ export default ListScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: height,
+    paddingTop: 20,
+    height: height - 50,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#283618',
   },
   backBtn: {
     width: 140,
-    height: 50,
-    marginTop: 20,
+    height: 30,
+    marginTop: 10,
     borderColor: '#bc6c25',
     backgroundColor: '#6a040f',
     borderRadius: 5,
@@ -142,8 +143,10 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     // flex: 1,
+    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
+
     // borderColor: '#aaa',
     // borderWidth: 1,
     // borderRadius: 10,
@@ -154,5 +157,6 @@ const styles = StyleSheet.create({
   },
   containerBottom: {
     flex: 1,
+    height: 50,
   },
 })

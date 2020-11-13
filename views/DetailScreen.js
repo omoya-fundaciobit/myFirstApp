@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 
 const DetailScreen = ({ route, navigation }) => {
-  const { id, name, surname, email, phone } = route.params
+  const { id, name, surname, email, avatar } = route.params
 
   return (
     <View style={styles.container}>
       <View style={styles.contactInfo}>
-        <Text style={styles.text}>ID: {id}</Text>
+        <Image source={{ uri: avatar }} style={styles.imagen} />
         <Text style={styles.text}>Name: {name}</Text>
         <Text style={styles.text}>Surname: {surname}</Text>
         <Text style={styles.text}>Email: {email}</Text>
@@ -53,5 +53,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     lineHeight: 60,
+  },
+  imagen: {
+    width: 300,
+    height: 300,
+    marginRight: 10,
+    borderRadius: 10,
   },
 })
