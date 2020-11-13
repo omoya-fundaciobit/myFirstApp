@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, RefreshControl, SafeAreaView, StyleSheet, Text, View, FlatList, Image } from 'react-native'
+import {
+  Dimensions,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Item from '../components/other/Item'
 
-import { CONTACTS } from '../mocks/data/contacts.mock'
+// import { CONTACTS } from '../mocks/data/contacts.mock'
+import axios from 'axios'
 const height = Dimensions.get('window').height
 
 const wait = (timeout) => {
@@ -16,6 +26,14 @@ const ListScreen = (props, route) => {
   const [selectedId, setSelectedId] = useState(null)
   const [index, setIndex] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
+  const [contacts, setContacts] = useState(null)
+
+  useEffect(() => {
+    axios
+      .get('https://reqres.in/api/users')
+      .then((result) => setContacts(result.data.data))
+      .catch((error) => console.log(error))
+  }, [])
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true)
@@ -35,7 +53,12 @@ const ListScreen = (props, route) => {
         onPress={() => {
           setSelectedId(item.id)
           setIndex(item.index)
-          props.navigation.navigate('DetailScreen', { id: item.id, name: item.name, surname: item.surname, email: item.email, phone: item.phone })
+          props.navigation.navigate('DetailScreen', {
+            id: item.id,
+            name: item.first_name,
+            surname: item.last_name,
+            email: item.email,
+          })
         }}
         style={[styles.item, { backgroundColor: backgroundColor }]}
       />
@@ -47,14 +70,26 @@ const ListScreen = (props, route) => {
       <View style={styles.containerTop}>
         <FlatList
           contentContainerStyle={styles.flatlist}
-          data={CONTACTS}
+          data={contacts}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
           numColumns={1}
-          getItemLayout={(data, index) => ({ length: 50, offset: 50 * index, index })}
-          initialScrollIndex={12}
-          refreshControl={<RefreshControl title='How refreshing!' titleColor='#fff' tintColor='#fff' refreshing={refreshing} onRefresh={onRefresh} />}
+          getItemLayout={(data, index) => ({
+            length: 50,
+            offset: 50 * index,
+            index,
+          })}
+          initialScrollIndex={0}
+          refreshControl={
+            <RefreshControl
+              title="How refreshing!"
+              titleColor="#fff"
+              tintColor="#fff"
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
         />
       </View>
 
@@ -62,7 +97,9 @@ const ListScreen = (props, route) => {
         {selectedId ? (
           <Text style={[styles.text, { marginTop: 20 }]}>
             Has seleccionado:
-            {CONTACTS.filter((contact) => contact.id === selectedId).map((contact) => contact.name)}
+            {contacts
+              .filter((contact) => contact.id === selectedId)
+              .map((contact) => contact.name)}
           </Text>
         ) : null}
 
@@ -70,7 +107,8 @@ const ListScreen = (props, route) => {
           style={styles.backBtn}
           onPress={() => {
             props.navigation.navigate('ListContainer')
-          }}>
+          }}
+        >
           <Text style={styles.text}>Back</Text>
         </TouchableOpacity>
       </View>

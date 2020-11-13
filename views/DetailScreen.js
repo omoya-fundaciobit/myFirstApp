@@ -11,14 +11,14 @@ const DetailScreen = ({ route, navigation }) => {
         <Text style={styles.text}>Name: {name}</Text>
         <Text style={styles.text}>Surname: {surname}</Text>
         <Text style={styles.text}>Email: {email}</Text>
-        <Text style={styles.text}>Phone: {phone}</Text>
       </View>
 
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ListScreen')
         }}
-        style={styles.backButton}>
+        style={styles.backButton}
+      >
         <Text style={styles.text}>Atrás</Text>
       </TouchableOpacity>
     </View>
