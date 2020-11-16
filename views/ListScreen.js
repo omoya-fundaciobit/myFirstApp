@@ -58,7 +58,7 @@ const ListScreen = (props, route) => {
             name: item.first_name,
             surname: item.last_name,
             email: item.email,
-            avatar: item.avatar,
+            avatar: `https://avatars.dicebear.com/api/avataaars/${item.id}.svg`,
           })
         }}
         style={[styles.item, { backgroundColor: backgroundColor }]}
